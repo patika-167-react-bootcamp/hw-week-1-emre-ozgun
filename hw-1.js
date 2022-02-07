@@ -22,8 +22,6 @@ const folders = [
 	},
 ];
 
-// move and copy functions are immutable!
-
 const move = (fileId, targetFolderID) => {
 	const folder = folders.find((folder) =>
 		folder.files.find((f) => f.id === fileId)
@@ -170,8 +168,10 @@ const parentFolderOf = (fileId) => {
 	return parentFolder.id;
 };
 
-// console.log(move(17, 6));
-// console.log(copy(18, 7));
-// console.log(remove(17));
-// console.log(removeFolder(6));
-// console.log(parentFolderOf(17));
+//NOTE: None of the functions are mutable. (Pure, deterministic functions)
+
+console.log(move(17, 6));
+console.log(copy(18, 7));
+console.log(remove(17));
+console.log(removeFolder(6));
+console.log(parentFolderOf(17));
