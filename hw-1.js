@@ -22,10 +22,16 @@ const folders = [
 	},
 ];
 
+// move and copy functions are immutable!
+
 const move = (fileId, targetFolderID) => {
 	const folder = folders.find((folder) =>
 		folder.files.find((f) => f.id === fileId)
 	);
+
+	if (!folder) {
+		throw new Error('File not found.');
+	}
 
 	//keep track of the old ID from where the file is moved  (line52 utilizes this id )
 	const oldFolderId = folder.id;
@@ -37,6 +43,10 @@ const move = (fileId, targetFolderID) => {
 	const folderToBeUpdated = folders.find(
 		(folder) => folder.id === targetFolderID
 	);
+
+	if (!folderToBeUpdated) {
+		throw new Error('Folder not found.');
+	}
 
 	//initialize empty files array if not present before copying.
 	if (!folderToBeUpdated.files) {
@@ -72,11 +82,19 @@ const copy = (fileId, targetFolderID) => {
 		folder.files.find((f) => f.id === fileId)
 	);
 
+	if (!folder) {
+		throw new Error('File not found.');
+	}
+
 	const fileToBeCopied = folder.files.find((f) => f.id === fileId);
 
 	const folderToBeUpdated = folders.find(
 		(folder) => folder.id === targetFolderID
 	);
+
+	if (!folderToBeUpdated) {
+		throw new Error('Folder not found.');
+	}
 
 	//initialize empty files array if not present before copying.
 	if (!folderToBeUpdated.files) {
@@ -104,6 +122,10 @@ const remove = (fileId) => {
 		folder.files.find((f) => f.id === fileId)
 	);
 
+	if (!folder) {
+		throw new Error('File not found.');
+	}
+
 	const folderId = folder.id;
 
 	const newFolders = folders.map((folder) => {
@@ -126,7 +148,13 @@ const removeFolder = (folderId) => {
 		throw new Error('Please provide a valid ID to remove the folder...');
 	}
 
+	const folderToBeRemoved = folders.find((f) => f.id === folderId);
+	if (!folderToBeRemoved) {
+		throw new Error('Folder not found.');
+	}
+
 	const newFolders = folders.filter((folder) => folder.id !== folderId);
+
 	return newFolders;
 };
 
@@ -134,8 +162,12 @@ const parentFolderOf = (fileId) => {
 	const parentFolder = folders.find((folder) =>
 		folder.files.find((f) => f.id === fileId)
 	);
-	const parentFolderId = parentFolder.id;
-	return parentFolderId;
+
+	if (!parentFolder) {
+		throw new Error(`Folder not found, can't access parent folder.`);
+	}
+
+	return parentFolder.id;
 };
 
 // console.log(move(17, 6));
