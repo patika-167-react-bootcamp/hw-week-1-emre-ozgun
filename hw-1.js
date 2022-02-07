@@ -168,7 +168,7 @@ const parentFolderOf = (fileId) => {
 	return parentFolder.id;
 };
 
-//NOTE: None of the functions are mutable. (Pure, deterministic functions)
+//NOTE: None of the functions are mutating the original input. (Pure, deterministic functions)
 
 console.log(move(17, 6));
 console.log(copy(18, 7));
