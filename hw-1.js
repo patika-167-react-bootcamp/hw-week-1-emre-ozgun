@@ -104,10 +104,20 @@ const remove = (fileId) => {
 		folder.files.find((f) => f.id === fileId)
 	);
 
-	return {
-		...folder,
-		files: folder.files.filter((f) => f.id !== fileId),
-	};
+	const folderId = folder.id;
+
+	const newFolders = folders.map((folder) => {
+		if (folder.id === folderId) {
+			return {
+				...folder,
+				files: folder.files.filter((f) => f.id !== fileId),
+			};
+		} else {
+			return folder;
+		}
+	});
+
+	return newFolders;
 };
 
 const removeFolder = (folderId) => {
@@ -128,8 +138,8 @@ const parentFolderOf = (fileId) => {
 	return parentFolderId;
 };
 
-console.log(move(17, 6));
-console.log(copy(18, 7));
-console.log(remove(17));
-console.log(removeFolder(6));
-console.log(parentFolderOf(17));
+// console.log(move(17, 6));
+// console.log(copy(18, 7));
+// console.log(remove(17));
+// console.log(removeFolder(6));
+// console.log(parentFolderOf(17));
