@@ -147,6 +147,7 @@ const removeFolder = (folderId) => {
 	}
 
 	const folderToBeRemoved = folders.find((f) => f.id === folderId);
+
 	if (!folderToBeRemoved) {
 		throw new Error('Folder not found.');
 	}
@@ -157,21 +158,25 @@ const removeFolder = (folderId) => {
 };
 
 const parentFolderOf = (fileId) => {
-	const parentFolder = folders.find((folder) =>
-		folder.files.find((f) => f.id === fileId)
-	);
+	const mapIds = folders.map(({ id }) => id);
 
-	if (!parentFolder) {
-		throw new Error(`Folder not found, can't access parent folder.`);
-	}
+	const mapFiles = folders
+		.map(({ files }, i) =>
+			files ? { [mapIds[i]]: new Set(files.map((f) => f.id)) } : []
+		)
+		.flat();
 
-	return parentFolder.id;
+	// there might be multiple parent folders...
+	const res = [];
+	mapFiles.forEach((o, i) => o[mapIds[i]].has(fileId) && res.push(mapIds[i]));
+
+	return res.length < 1 ? 'File not found' : res;
 };
 
 //NOTE: None of the functions are mutating the original input. (Pure, deterministic functions)
 
-console.log(move(17, 6));
-console.log(copy(18, 7));
-console.log(remove(17));
-console.log(removeFolder(6));
-console.log(parentFolderOf(17));
+// console.log(move(17, 6));
+// console.log(copy(18, 7));
+// console.log(remove(17));
+// console.log(removeFolder(6));
+// console.log(parentFolderOf(17));
