@@ -31,7 +31,7 @@ const move = (fileId, targetFolderID) => {
 		throw new Error('File not found.');
 	}
 
-	//keep track of the old ID from where the file is moved  (line52 utilizes this id )
+	//keep track of the old ID from where the file is moved  (line60 utilizes this id )
 	const oldFolderId = folder.id;
 
 	const fileToBeCopied = folder.files.find((f) => f.id === fileId);
