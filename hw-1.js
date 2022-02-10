@@ -160,6 +160,7 @@ const removeFolder = (folderId) => {
 const parentFolderOf = (fileId) => {
 	const mapIds = folders.map(({ id }) => id);
 
+	//map folderIds to fileIds
 	const mapFiles = folders
 		.map(({ files }, i) =>
 			files ? { [mapIds[i]]: new Set(files.map((f) => f.id)) } : []
